@@ -9,5 +9,6 @@ namespace ATS
     {
         FreeMinutes,
         NoMonthlyFee,
+        R300
     }
 }

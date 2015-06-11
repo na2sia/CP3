@@ -44,7 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATS.cs" />
+    <Compile Include="CallArgs.cs" />
+    <Compile Include="Calling.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="ClientArgs.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="PortStatus.cs" />
