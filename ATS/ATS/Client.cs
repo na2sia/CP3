@@ -90,7 +90,82 @@ namespace ATS
             }
         }
 
+        //ChangingTarif
+        public event EventHandler<ClientArgs> ChangingTarifInitiation;
 
+        public void ChangeTarif()
+        {
+            OnChangingTarif(this, new ClientArgs(Number));
+        }
+        public virtual void OnChangingTarif(object sender, ClientArgs args)
+        {
+            if (ChangingTarifInitiation != null)
+            {
+                ChangingTarifInitiation(sender, args);
+            }
+        }
         
+        //Payment
+        public event EventHandler<PaymentArgs> PaymentInitiation;
+
+        public void Pay(int summ)
+        {
+            OnPay(this, new PaymentArgs(summ, Number));
+        }
+
+        protected virtual void OnPay(object sender, PaymentArgs payArgs)
+        {
+            if (PaymentInitiation != null)
+            {
+                PaymentInitiation(this, payArgs);
+            }
+        }
+
+    
+        //CallingHistory
+        public event EventHandler<ClientArgs> GetCallingsByDateInitiation;
+        public event EventHandler<ClientArgs> GetCallingsByPriceInitiation;
+        public event EventHandler<ClientArgs> GetCallingsByAbonentInitiation;
+
+        public void GetCallings(int num)
+        {
+            switch (num)
+            {
+                case 0:
+                    OnGetCallingByDate(this, new ClientArgs(Number));
+                    break;
+                case 1:
+                    OnGetCallingsByPrice(this, new ClientArgs(Number));
+                    break;
+                default:
+                    OnGetCallingsByAbonent(this, new ClientArgs(Number));
+                    break;
+            }
+        }
+
+        private void OnGetCallingByDate(object sender, ClientArgs clientArgs)
+        {
+            if (GetCallingsByDateInitiation != null)
+            {
+                GetCallingsByDateInitiation(sender, clientArgs);
+            }
+        }
+                
+        protected virtual void OnGetCallingsByPrice(object sender, ClientArgs clientArgs)
+        {
+            if (GetCallingsByPriceInitiation != null)
+            {
+                GetCallingsByPriceInitiation(sender, clientArgs);
+            }
+        }
+
+        protected virtual void OnGetCallingsByAbonent(object sender, ClientArgs clientArgs)
+        {
+            if (GetCallingsByAbonentInitiation != null)
+            {
+                GetCallingsByAbonentInitiation(sender, clientArgs);
+            }
+        }
+                       
     }
 }

@@ -10,6 +10,6 @@ namespace ATS
         On,
         Off,
         Call,
-        Closed
+        Banned
     }
 }

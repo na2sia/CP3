@@ -45,5 +45,7 @@ namespace ATS
                 + Environment.NewLine
                 + "Price: " + Price + Environment.NewLine;
         }
+
+
     }
 }
