@@ -226,7 +226,7 @@ namespace ATS
                 this[thisConnect.NumberSender].Port.PortStatus = PortStatus.On;
                 this[thisConnect.NumberReceiver].Port.PortStatus = PortStatus.On;
 
-                //added calling 
+                //Added calling 
 
                 var currentCalling = callings.Last(calling => calling.SenderOfCall.Client.Number == thisConnect.NumberSender);
                 Remove(callings.Last(calling => calling.SenderOfCall.Client.Number == thisConnect.NumberSender));
@@ -235,11 +235,11 @@ namespace ATS
                 currentCalling.Price = CalculatePrice(this[thisConnect.NumberSender], currentCalling.TimeOfCalling.TotalMinutes);
                 Add(currentCalling);
 
-                //remove money
+                //Remove money
                 this[thisConnect.NumberSender].CurrentBalance -= this[thisConnect.NumberSender].Tarif.PriceByMin * currentCalling.TimeOfCalling.TotalMinutes;
                 this[thisConnect.NumberReceiver].CurrentBalance -= this[thisConnect.NumberReceiver].Tarif.PriceByMin * currentCalling.TimeOfCalling.TotalMinutes;
 
-                //changed port status
+                //Changed port status
                 if (this[thisConnect.NumberReceiver].CurrentBalance <= 0)
                 {
                     this[thisConnect.NumberReceiver].Port.PortStatus = PortStatus.Banned;
@@ -252,7 +252,7 @@ namespace ATS
             connectedArgs.Remove(thisConnect);
         }
 
-        //AllPrice
+        //TotalCost
         private static double CalculatePrice(Contract contractSender, double totalMins)
         {
             return contractSender.Tarif.PriceByMin * totalMins;
@@ -292,6 +292,8 @@ namespace ATS
             if ((DateTime.Now - this[clientArgs.Number].LastChangingTarifTime).Days >= 30)
             {
                 this[clientArgs.Number].Tarif.TarifType = this[clientArgs.Number].Tarif.TarifType == TarifType.FreeMinutes ? TarifType.NoMonthlyFee : TarifType.FreeMinutes;
+                
+                Console.WriteLine("The tariff plan is changed on " + this[clientArgs.Number].Tarif.TarifType);
             }
             else
             {
@@ -300,7 +302,6 @@ namespace ATS
         }
 
         //GetCalling
-        
         private IEnumerable<Calling> GetCallings(Contract contract)
         {
             return callings.Where(calling => Equals(calling.SenderOfCall, contract)).ToList();
